@@ -99,35 +99,34 @@
   </div>
 
 <script>
-    const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
+const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
 
-    // We need to know which one is the last one checked
-    let lastChecked;
+// We need to know which one is the last one checked of the boxes
+let lastChecked;
 
-    function handleCheck(e){
-        // Check if the shift key is down
-        // Also check if the user is not unchecking it
-        let inBetween = false;
-        if(e.shiftKey && this.checked ){
-        // Loop over every single checkbox
-        checkboxes.forEach(checkbox => {
-            console.log(checkbox);
-            if(checkbox === this || checkbox === lastChecked) {
-                inBetween = !inBetween;
-                console.log("Starting to check them inbetween");
-            }
+function handleCheck(e) {
+	// Check if the shift key is down
+	// Also check if the user is not unchecking the box
+	let inBetween = false;
+	if (e.shiftKey && this.checked) {
+		// Loop over every single checkbox to see which one is the first and the last checked, and based on the distance checking the remaining boxes ===> the "inBetween"
+		checkboxes.forEach(checkbox => {
+			console.log(checkbox);
+			if (checkbox === this || checkbox === lastChecked) {
+				inBetween = !inBetween;
+				console.log("Starting to check them inbetween");
+			}
 
-            if(inBetween){
-                checkbox.checked = true;
-            }
-        })
-        }
+			if (inBetween) {
+				checkbox.checked = true;
+			}
+		});
+	}
 
-        lastChecked = this;
+	lastChecked = this;
+}
 
-    }
-
-    checkboxes.forEach(checkbox => checkbox.addEventListener("click", handleCheck))
+checkboxes.forEach(checkbox => checkbox.addEventListener("click", handleCheck)); //The reason we are not listening for a change event is the click event is actually also firing when we use the keyboard as well
 </script>
 </body>
 </html>
